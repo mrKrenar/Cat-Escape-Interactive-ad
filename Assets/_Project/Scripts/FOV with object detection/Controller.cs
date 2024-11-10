@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Controller : MonoBehaviour {
@@ -9,6 +10,19 @@ public class Controller : MonoBehaviour {
 	public float moveSpeed = 6, rotateSpeed;
 
 	Rigidbody rigidbody;
+
+	[SerializeField] private UnityEvent<bool> MovingStateChanged;
+	
+	private bool isMoving;
+	private bool IsMoving
+	{
+		get => isMoving;
+		set
+		{
+			isMoving = value;
+			MovingStateChanged?.Invoke(isMoving);
+		}
+	}
 	
 	void Start () {
 		rigidbody = GetComponent<Rigidbody> ();
@@ -16,8 +30,28 @@ public class Controller : MonoBehaviour {
 
 	void FixedUpdate() {
 		Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-		rigidbody.MovePosition (rigidbody.position + direction * (moveSpeed * Time.fixedDeltaTime));
+		MoveTowardTarget(direction);
 		RotateTowardsTargetOnYAxis(direction);
+	}
+
+	void MoveTowardTarget(Vector3 direction)
+	{
+		if (direction.sqrMagnitude > 0.1f)
+		{
+			rigidbody.MovePosition (rigidbody.position + direction * (moveSpeed * Time.fixedDeltaTime));
+
+			if (!IsMoving)
+			{
+				IsMoving = true;
+			}
+		}
+		else
+		{
+			if (IsMoving)
+			{
+				IsMoving = false;
+			}
+		}
 	}
 
 	void RotateTowardsTargetOnYAxis(Vector3 targetPosition)
