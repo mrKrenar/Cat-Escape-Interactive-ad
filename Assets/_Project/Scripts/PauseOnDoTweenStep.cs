@@ -1,17 +1,31 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(DOTweenPath))]
 public class PauseOnDoTweenStep : MonoBehaviour
 {
+    [SerializeField] private DOTweenPath doTweenPath;
+    
     [Range(1,2)][SerializeField] private int pauseStepCount = 2;
     [SerializeField] private float pauseDuration = 1;
     
+    public UnityEvent<bool> Moving;
+
     private int step = 1;
 
-    
-    [SerializeField] private DOTweenPath doTweenPath;
+    private bool isRunning;
+    private bool IsRunning
+    {
+        get => isRunning;
+        set
+        {
+            isRunning = value;
+            Moving?.Invoke(isRunning);
+        }
+    }
 
     private void Awake()
     {
@@ -29,6 +43,8 @@ public class PauseOnDoTweenStep : MonoBehaviour
         {
             doTweenPath.onStepComplete.AddListener(StepCompleteHandler);
         }
+        
+        Resume();
     }
     
     private void OnDestroy()
@@ -51,10 +67,14 @@ public class PauseOnDoTweenStep : MonoBehaviour
     {
         doTweenPath.DOPause();
         
+        IsRunning = false;
+        
         Invoke(nameof(Resume), pauseDuration);
     }
     void Resume()
     {
         doTweenPath.DOPlay();
+
+        IsRunning = true;
     }
 }
