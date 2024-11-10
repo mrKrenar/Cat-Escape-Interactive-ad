@@ -3,15 +3,9 @@ using System.Collections;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Controller : MonoBehaviour {
-
-	public DynamicJoystick variableJoystick;
-	
-	public float moveSpeed = 6, rotateSpeed;
-
+public class Controller : MonoBehaviour 
+{
 	Rigidbody rigidbody;
-
-	[SerializeField] private UnityEvent<bool> MovingStateChanged;
 	
 	private bool isMoving;
 	private bool IsMoving
@@ -24,7 +18,14 @@ public class Controller : MonoBehaviour {
 		}
 	}
 	
-	void Start () {
+	[SerializeField] private float moveSpeed = 6, rotateSpeed;
+
+	public DynamicJoystick variableJoystick;
+	
+	[SerializeField] private UnityEvent<bool> MovingStateChanged;
+
+	void Start () 
+	{
 		rigidbody = GetComponent<Rigidbody> ();
 	}
 
