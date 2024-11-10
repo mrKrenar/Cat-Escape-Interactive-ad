@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
@@ -30,6 +31,11 @@ public class MoveAndRotate : MonoBehaviour
 	}
 
 	void FixedUpdate() {
+		if (GameState.StateOfGame != StateOfGame.playing)
+		{
+			return;
+		}
+		
 		Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
 		MoveTowardTarget(direction);
 		RotateTowardsTargetOnYAxis(direction);

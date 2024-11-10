@@ -22,7 +22,7 @@ public class FieldOfView : MonoBehaviour {
 	public MeshFilter viewMeshFilter;
 	Mesh viewMesh;
 
-	public UnityEvent<List<Transform>> VisibleTargetsFound;
+	public UnityEvent<Transform> VisibleTargetFound;
 
 	void Start() {
 		viewMesh = new Mesh ();
@@ -60,7 +60,8 @@ public class FieldOfView : MonoBehaviour {
 
 		if (visibleTargets.Count > 0)
 		{
-			VisibleTargetsFound?.Invoke(visibleTargets);
+			VisibleTargetFound?.Invoke(visibleTargets[0]);
+			StopCoroutine(nameof(FindTargetsWithDelay));
 		}
 	}
 
