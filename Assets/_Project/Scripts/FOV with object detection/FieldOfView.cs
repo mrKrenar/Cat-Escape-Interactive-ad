@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class FieldOfView : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class FieldOfView : MonoBehaviour {
 
 	public MeshFilter viewMeshFilter;
 	Mesh viewMesh;
+
+	public UnityEvent<List<Transform>> VisibleTargetsFound;
 
 	void Start() {
 		viewMesh = new Mesh ();
@@ -55,11 +58,10 @@ public class FieldOfView : MonoBehaviour {
 			}
 		}
 
-		foreach (var col in visibleTargets)
+		if (visibleTargets.Count > 0)
 		{
-			Debug.Log(col.gameObject.name, col.gameObject);
+			VisibleTargetsFound?.Invoke(visibleTargets);
 		}
-		
 	}
 
 	void DrawFieldOfView() {
