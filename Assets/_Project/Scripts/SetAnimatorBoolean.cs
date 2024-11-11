@@ -12,8 +12,8 @@ public class SetAnimatorBoolean : MonoBehaviour
         keyHash = Animator.StringToHash(boolKeyToSet);
     }
 
-    public void SetValue(bool moving)
+    public void SetValue(bool value)
     {
-        animator.SetBool(keyHash, moving);
+        animator.SetBool(keyHash, value);
     }
 }
