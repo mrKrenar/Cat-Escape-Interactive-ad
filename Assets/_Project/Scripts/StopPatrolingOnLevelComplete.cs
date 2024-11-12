@@ -7,8 +7,6 @@ public class StopPatrolingOnLevelComplete : MonoBehaviour
     [SerializeField] private DOTweenPath tweenPath;
     [SerializeField] private Animator animator;
     
-    private readonly int WalkBoolHash = Animator.StringToHash("bo_walk");
-
     private void Awake()
     {
         GameState.OnGameStateChanged += GameState_OnGameStateChanged;
@@ -25,7 +23,7 @@ public class StopPatrolingOnLevelComplete : MonoBehaviour
         {
             tweenPath.DOPause();
             tweenPath.enabled = false;
-            animator.SetBool(WalkBoolHash,false);
+            animator.SetBool("bo_walk",false);
         }
     }
 }

@@ -6,7 +6,7 @@ public class GameState : MonoBehaviour
     public static StateOfGame StateOfGame = StateOfGame.playing;
     public static event Action<StateOfGame> OnGameStateChanged;
     
-    public static void UserCaught()
+    public static void PlayerCaught()
     {
         if (StateOfGame == StateOfGame.lost) return;
 

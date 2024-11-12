@@ -8,22 +8,22 @@ public class EndCardEnabler : MonoBehaviour
     
     private void Start()
     {
-        GameState.OnGameStateChanged += GameState_OnGameStateChanged;
+        GameState.OnGameStateChanged += GameState_OnGameStateChangedHandler;
     }
 
     private void OnDestroy()
     {
-        GameState.OnGameStateChanged -= GameState_OnGameStateChanged;
+        GameState.OnGameStateChanged -= GameState_OnGameStateChangedHandler;
     }
 
-    private void GameState_OnGameStateChanged(StateOfGame newState)
+    private void GameState_OnGameStateChangedHandler(StateOfGame newState)
     {
 
         StartCoroutine(EnableEndCardWithDelay());
         
         IEnumerator EnableEndCardWithDelay()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.8f);
             
             switch (newState)
             {
