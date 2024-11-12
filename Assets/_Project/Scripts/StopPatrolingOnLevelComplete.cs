@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class StopPatrolingOnGameOver : MonoBehaviour
+public class StopPatrolingOnLevelComplete : MonoBehaviour
 {
     [SerializeField] private DOTweenPath tweenPath;
     [SerializeField] private Animator animator;

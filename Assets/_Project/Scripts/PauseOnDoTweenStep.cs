@@ -73,6 +73,11 @@ public class PauseOnDoTweenStep : MonoBehaviour
     }
     void Resume()
     {
+        if (GameState.StateOfGame != StateOfGame.playing)
+        {
+            return;
+        }
+        
         doTweenPath.DOPlay();
 
         IsRunning = true;
